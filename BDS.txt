@@ -1,0 +1,294 @@
+#include<iostream>
+#include<string>
+#include<stdlib.h>
+#include<fstream>
+using namespace std;
+//made to store donoratributes
+struct donor{
+	string name;
+	string fname;
+	int age;
+	string gender;
+	string bloodtype;
+	string donationstatus;
+	
+};
+
+donor d[1000];
+int number;   
+void add_donor();
+void search_donor(string searchdonor); //donor to find	
+void search_bloodt(string searchbt);
+void upgrade_donor(string name);
+void delete_donor(string deletee);
+		
+		
+void get_data( int i)
+{
+	ofstream myfile("xyz.txt", ios::in  |  ios::out  |  ios::app);
+	cout<<"ENTER DONOR NAME :"<<endl;
+	cin>>d[i].name;
+	myfile<<d[i].name<<endl;
+	cout<<" ENTER DONOR'S FATHER NAME :"<<endl;
+	cin>>d[i].fname;
+		myfile<<d[i].fname<<endl;
+	cout<<" ENTER DONOR'S AGE :"<<endl;
+	cin>>d[i].age;
+		myfile<<d[i].age<<endl;
+	cout<<" ENTER DONOR'S'GENDER :"<<endl;
+	cin>>d[i].gender;
+		myfile<<d[i].gender<<endl;
+	cout<<" ENTER DONOR'S 'BLOOD TYPE :"<<endl;
+	cin>>d[i].bloodtype;
+	myfile<<d[i].bloodtype<<endl;
+
+myfile.close();
+	cin.ignore();
+}
+
+void menu()
+{
+		string searchdonor;
+	string searchbt;
+	string name;
+	string namedel;
+	
+	
+	
+	cout<<" WELCOME TO BLOOD DONATION SYSTEM"<<endl;
+	
+		cout<<" Enter 1 for Adding Records"<<endl;
+		cout<<" Enter 2 for Searching donor by name"<<endl;
+		cout<<" Enter 3 for Searching by blood group"<<endl;
+		cout<<" Enter 4 for Updation after Successful donation"<<endl;
+		cout<<" Enter 5 for Deleting donors record"<<endl;
+
+	cout<<endl;
+	cout<<"Choose an operation you want to perfom"<<endl;
+
+		
+int option;
+cin>>option;
+
+
+ while(option>5)
+    {
+    	cout<<"invalid option, enter again(1-5):"<<endl;//to validate entry between 1 and 20 option
+    	cin>>option;
+	}
+	
+	
+	if(option==1)
+	{
+		 cout<<"ENTER THE NO OF DONOR'S WHOES DATA YOU WANT TO ENTER"<<endl;
+     cin>>number;
+	  
+	  add_donor();
+	}
+	
+	
+	
+		else if(option==2)
+		{
+			cout<<"ENTER THE NAME OF DONOR YOU WANT TO SEARCH FOR : "<<endl;
+	  cin>>searchdonor;
+	  
+	  search_donor(searchdonor);
+		}
+		
+		
+		else if(option==3)
+		{
+			  cout<<"ENTER THE BLOOD GROUP YOU ARE LOOKING FOR : "<<endl;
+	          cin>>searchbt;
+	  
+	          search_bloodt(searchbt);
+		}
+		
+		else if(option==4)
+		{
+			 
+	  cout<<"ENTER THE NAME OF DONOR WHO'S DATA YOU WANT TO UPDATE :"<<endl;
+	  cin>>name;
+	 
+	  
+	  upgrade_donor(name);
+			
+		}
+		
+		
+		else if(option==5)
+		{
+				  
+	  cout<<"ENTER THE NAME OF DONOR WHOES DATA YOU WANT TO DELETE  : "<<endl;
+	  cin>>namedel;
+	  
+	  delete_donor(namedel);
+	  
+			
+		}
+		
+		 	else
+                   	{
+	            cout<<"invalid entry"<<endl;
+	              	}
+		
+}
+
+
+
+
+
+int main()
+{
+		
+
+char var;
+menu();
+
+while(var!='n')
+{
+
+     cout<<endl;
+	cout<<"Do you want to perform again,If yes enter (Y),"<<endl;
+	cout<<"If you want to terminate the program,Enter (N),"<<endl;
+    cin>>var;
+	menu();
+
+}
+
+	cout<<"program terminated";
+	
+
+	
+
+	return 0;
+}
+//function inside a function,one to get no. of donors and other to add data of donors
+void add_donor()
+{
+	for(int i=0; i<number;i++)
+	{
+		get_data(i);
+		cout<<"Now enter the record for next donor"<<endl;
+		
+	}
+}
+
+//search donor function
+void search_donor(string searchdonor)
+{
+  for(int i=0;i<=number;i++)       //Loop thrugh complete array.
+ { 
+      
+   if(d[i].name==searchdonor)   
+  {   
+            d[i].donationstatus = "NOT DONATED";
+     
+ 	        cout<<" NAME   : "<<d[i].name<<endl;
+ 	        cout<<" FATHER'S NAME :"<<d[i].fname<<endl;
+			cout<<" AGE    : "<<d[i].age<<endl;
+			cout<<" GENDER : "<<d[i].gender<<endl;
+			cout<<" BLOOD TYPE : "<<d[i].bloodtype<<endl;
+		    cout<<" DONATION STATUS :"<<d[i].donationstatus<<endl;
+            
+ 
+ 
+ 
+ 
+   }
+  } 
+}
+
+void search_bloodt(string searchbt)
+{
+	for(int i=0;i<=number;i++){
+		if(d[i].bloodtype == searchbt){
+			
+				d[i].donationstatus = "NOT DONATED";
+			
+ 	        cout<<" NAME   : "<<d[i].name<<endl;
+ 	        cout<<" DONOR'S FATHER NAME :"<<d[i].fname<<endl;
+			cout<<" AGE    : "<<d[i].age<<endl;
+			cout<<" GENDER : "<<d[i].gender<<endl;
+			cout<<" BLOOD TYPE : "<<d[i].bloodtype<<endl;
+		    cout<<" DONATION STATUS :"<<d[i].donationstatus<<endl;
+			
+		}
+	}
+}
+
+
+
+void upgrade_donor(string name)
+{
+	for(int i=0;i<number;i++){
+	
+		if(d[i].name == name){
+			
+			ofstream myfile("xyz.txt", ios::in  |  ios::out  |  ios::app);
+		int bottels;
+			cout<<"ENTER NUMBER OF BOTTELS DONATED BY THE DONOR :"<<endl;
+	    cin>>bottels;	
+		d[i].donationstatus = "DONATED";
+			myfile<<d[i].donationstatus<<endl;
+			cout<<" NAME   : "<<d[i].name<<endl;
+				myfile<<d[i].name<<endl;
+ 	        cout<<" FATHER NAME :"<<d[i].fname<<endl;
+ 	        	myfile<<d[i].fname<<endl;
+			cout<<" AGE    : "<<d[i].age<<endl;
+				myfile<<d[i].age<<endl;
+			cout<<" GENDER : "<<d[i].gender<<endl;
+				myfile<<d[i].gender<<endl;
+			cout<<" BLOOD TYPE : "<<d[i].bloodtype<<endl;
+				myfile<<d[i].bloodtype<<endl;
+			cout<<" DONATION STATUS :"<<d[i].donationstatus<<endl;
+				myfile<<d[i].donationstatus<<endl;
+			cout<<"NUMBER OF BOTTELS DONATED BY THE DONOR  :" <<bottels;
+			
+		    
+		    myfile.close();
+			
+			
+		}
+	}
+}
+
+void delete_donor(string deletee)
+{
+	
+	for(int i=0;i<number;i++)
+	{
+		if(d[i].name == deletee)
+		{
+				ofstream myfile("xyz.txt", ios::in  |  ios::out  |  ios::app);
+				
+			d[i].name = "";
+			myfile<<d[i].name<<endl;
+			d[i].fname ="";
+			myfile<<d[i].fname<<endl;
+		    d[i].bloodtype="";
+		    myfile<<d[i].bloodtype<<endl;
+			d[i].gender="";
+			 myfile<<d[i].gender<<endl;
+			d[i].donationstatus="";
+			 myfile<<d[i].donationstatus<<endl;
+		    d[i].age=0;
+		     myfile<<d[i].age<<endl;
+			cout<<"DATA IS SUCESSFULLY DELETED"<<endl;
+			myfile<<"Data after deletion"<<endl;
+			myfile<<"Data successfully deleted"<<endl;
+			
+			  myfile.close();
+			
+			cout<<"DATA After deleting is: "<<endl;
+			  cout<<" NAME   : "<<d[i].name<<endl;
+ 	        cout<<" FATHER'S NAME :"<<d[i].fname<<endl;
+			cout<<" AGE    : "<<d[i].age<<endl;
+			cout<<" GENDER : "<<d[i].gender<<endl;
+			cout<<" BLOOD TYPE : "<<d[i].bloodtype<<endl;
+		    cout<<" DONATION STATUS :"<<d[i].donationstatus<<endl;
+			
+		}
+	}
+}
